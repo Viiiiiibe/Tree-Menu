@@ -1,0 +1,29 @@
+<ul class="list-group">
+  {% for node in menu_tree %}
+    <li class="list-group-item">
+      <a href="{% url 'index'%}{{node.item.slug}}" >
+        {{ node.item.name }}
+      </a>
+      {% if node.children and node.is_expanded %}
+        <ul class="list-group">
+          {% for child in node.children %}
+            <li class="list-group-item">
+              <a href="{% url 'index' %}{{child.item.slug}}" >
+                {{ child.item.name }}
+              </a>
+              {% if child.children and child.is_expanded %}
+                <ul class="list-group">
+                  {% include "menuapp/menu.html" with menu_tree=child.children %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+
+
+
